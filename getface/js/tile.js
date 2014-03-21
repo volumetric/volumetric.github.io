@@ -18,7 +18,8 @@ var img_url = [
   ];
 
   var power = Math.round(Math.log(this.value)/Math.log(2)) - 1;
-  this.img_value = "<img style='width:107px; height:107px;' src='"+img_url[power]+"'/>";
+  // this.img_value = "<img style='width:107px; height:107px;' src='"+img_url[power]+"'/>";
+  this.img_value = "";
   
   this.previousPosition = null;
   this.mergedFrom       = null; // Tracks tiles that merged together
