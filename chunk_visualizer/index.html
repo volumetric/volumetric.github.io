@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chunk Visualizer</title>
+<style>
+    body { font-family: Arial, sans-serif; padding: 25%;}
+    #chunkDisplay { white-space: pre-wrap; word-wrap: break-word; }
+    .chunk0 { background-color: #ee82ee; }
+    .chunk1 { background-color: #4b0082; }
+    .chunk2 { background-color: #87ceeb; }
+    .chunk3 { background-color: #98fb98; }
+    .chunk4 { background-color: #ffffe0; }
+    .chunk5 { background-color: #ffd700; }
+    .chunk6 { background-color: #ff6347; }
+</style>
+</head>
+<body>
+    <textarea id="textInput" placeholder="Enter text here..." rows="10" style="width:100%">Write an HTML, CSS, and Javascript code for a web app called Chunk Visualizer. It has a text area at the top where the user would put their text content, below it would be a slider called chunk size using which the user can change the chunk character size. The default value of that would be 1 character and can be increased maximum up to the number of characters in the input text above. Below the slider, the text given in the text area will be displayed with color highlights on the parts of the text belonging to the 1st, 2nd, 3rd, etc. chunks. The colors will be 7 colors of VIBGYOR that will cycle for chunks more than 7. As the user changes the slider value, it should update the color highlighting in the text below. Put all the HTML/CSS/JS code in a single code snippet.</textarea>
+    <br>
+    Chunk Size: <input type="range" id="chunkSize" min="1" value="1" style="width:100%"><span id="chunkSizeValue">1</span>
+    <br>
+    <div id="chunkDisplay"></div>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const chunkSizeInput = document.getElementById('chunkSize');
+        const chunkDisplay = document.getElementById('chunkDisplay');
+        const chunkSizeValue = document.getElementById('chunkSizeValue');
+
+        function updateChunkSize() {
+            const size = chunkSizeInput.value;
+            chunkSizeValue.textContent = size;
+            highlightChunks(size);
+        }
+
+        function highlightChunks(size) {
+            const text = textInput.value;
+            chunkSizeInput.max = text.length;
+            let highlightedText = '';
+            for (let i = 0; i < text.length; i += parseInt(size)) {
+                const chunk = text.substring(i, i + parseInt(size));
+                const chunkClass = 'chunk' + (Math.floor(i / size) % 7);
+                highlightedText += `<span class="${chunkClass}">${chunk}</span>`;
+            }
+            chunkDisplay.innerHTML = highlightedText;
+        }
+
+        textInput.addEventListener('input', () => updateChunkSize());
+        chunkSizeInput.addEventListener('input', () => updateChunkSize());
+
+        // Initialize
+        updateChunkSize();
+    </script>
+</body>
+</html>
